@@ -1,0 +1,5 @@
+classes = 80
+train = ../darknet_drone/train.txt
+valid = ../darknet_drone/test.txt
+names = data/coco.names
+backup = backup/

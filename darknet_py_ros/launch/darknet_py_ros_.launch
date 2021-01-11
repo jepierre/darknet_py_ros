@@ -1,0 +1,25 @@
+<launch>
+
+	<!-- <node pkg= "darknet_py_ros" name="darknet_py_ros" type="darknet_yolo_node.py"  output="screen">  -->
+    <!-- <remap from='image' to='/zedm/zed_node/rgb/image_rect_color'/> -->
+    <!-- <remap from='depth_image' to='/zedm/zed_node/depth/depth_registered'/> -->
+    <!-- <remap from='pcloud' to='/zedm/zed_node/point_cloud/cloud_registered'/> -->
+	<!-- </node> -->
+  <!-- <node pkg="drone_detection" name="detect_cloud" type="detect_cloud" output="screen"> -->
+  <!-- </node> -->
+
+  <!-- rosbag -->
+  <!-- Argument to record data -->
+  <!-- <arg name="record_data" default="false" /> -->
+  <!-- <arg name="rosbag_file" default="$(find drone_detection)/data/drone_dection" /> -->
+  <!-- <node pkg="rosbag" type="record" name="rosbag_record" -->
+    <!-- args="record -o $(arg rosbag_file) -a" -->
+    <!-- if="$(arg record_data)" /> -->
+
+	<!-- rviz -->
+  <arg name ="rviz" default="true" />
+  <arg name ="rviz_file" default="$(find darknet_py_ros)/config/darknet_py_ros.rviz"/>
+	<node pkg ="rviz" type="rviz" name="rviz" output="screen" args= "-d $(arg rviz_file)" if="$(arg rviz)"/>
+  <!-- roslaunch zed_wrapper zedm.launch -->
+  <include file="$(find zed_wrapper)/launch/zedm.launch"/>
+</launch>
