@@ -1,6 +1,10 @@
 # Darknet ROS Python Node
 
 
+# todo: 
+add how to build darknet
+
+
 ```
 cd catkin_workspace/src
 git clone --recursive <this repo>.git
