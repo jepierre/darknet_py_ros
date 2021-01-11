@@ -2,7 +2,8 @@
 
 
 # todo: 
-add how to build darknet
+addinstructions how to build darknet
+publish x,  y, z coordinates of detections
 
 
 ```
