@@ -24,9 +24,15 @@ class Yolo:
     
     def __init__(self):
       self.bridge = CvBridge()
+      PATH = os.path.dirname(__file__)
+      os.chdir(PATH)
       cfg_file = os.path.join("../data/cfg", "yolo-drone.cfg")
       data_file = os.path.join("../data", "drone.data")
       weights = os.path.join("../data/weights", "yolo-drone_199000.weights")
+
+      cfg_file = rospy.get_param('cfg_file', cfg_file)
+      data_file = rospy.get_param('data_file', data_file)
+      weights = rospy.get_param('weights', weights)
 
       self.network, self.class_names, self.class_colors = dn.load_network(
         cfg_file,
@@ -112,15 +118,18 @@ class Yolo:
           bounding_box.probability = float(detection[1])
           bounding_box.id = idx
           xmin, ymin, xmax, ymax = dn.bbox2points(detection[2])
-          bounding_box.xmin = xmin
-          bounding_box.xmax = xmax
-          bounding_box.ymin = ymin
-          bounding_box.ymax = ymax
+          bounding_box.xmin = float(xmin/self.width)
+          bounding_box.xmax = float(xmax/self.width)
+          bounding_box.ymin = float(ymin/self.height)
+          bounding_box.ymax = float(ymax/self.height)
 
           bounding_boxes.bounding_boxes.append(bounding_box)
           
         bounding_boxes.header.stamp = rospy.Time.now()
+        # pass on image timestamp instead
+        # bounding_boxes.header.stamp = data.header.stamp
         bounding_boxes.header.frame_id = "detection"
+        bounding_boxes.num_boxes = num_detections
         bounding_boxes.image_header = data.header
         self.bb_pub.publish(bounding_boxes)
 

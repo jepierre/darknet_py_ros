@@ -1,6 +1,9 @@
 <launch>
-
-	<!-- <node pkg= "darknet_py_ros" name="darknet_py_ros" type="darknet_yolo_node.py"  output="screen">  -->
+    <param name="cfg_file" value="$(find darknet_py_ros)/data/cfg/yolo-drone.cfg" />
+    <param name="data_file" value="$(find darknet_py_ros)/data/drone.data" />
+    <param name="weights" value="$(find darknet_py_ros)/data/weights/yolo-drone_199000.weights" />
+	<node pkg= "darknet_py_ros" name="darknet_py_ros" type="darknet_yolo_node.py"  output="screen"> 
+  </node>
     <!-- <remap from='image' to='/zedm/zed_node/rgb/image_rect_color'/> -->
     <!-- <remap from='depth_image' to='/zedm/zed_node/depth/depth_registered'/> -->
     <!-- <remap from='pcloud' to='/zedm/zed_node/point_cloud/cloud_registered'/> -->
