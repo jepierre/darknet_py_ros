@@ -51,7 +51,7 @@ class Yolo:
       self.image_sub = rospy.Subscriber("/zedm/zed_node/rgb/image_rect_color", Image, self.image_cb,
       # self.image_sub = rospy.Subscriber("image", Image, self.image_cb,
                                         queue_size=1, buff_size=2**24)
-      self.bb_pub = rospy.Publisher('darknet_py_ros/bounding_boxes',BoundingBoxes, queue_size=1)
+      self.bb_pub = rospy.Publisher('darknet_py_ros/bounding_boxes',BoundingBoxes, queue_size=10)
       self.object_count_pub = rospy.Publisher('darknet_py_ros/object_count', ObjectCount, queue_size=1)
       self.detection_img_pub = rospy.Publisher('darknet_py_ros/detection_img',
                                     Image, queue_size=10)
