@@ -1,14 +1,13 @@
 # Darknet ROS Python Node
 
-
 # todo: 
 addinstructions how to build darknet
 publish x,  y, z coordinates of detections
 
 
 ```
-cd catkin_workspace/src
-git clone --recursive <this repo>.git
+cd ~/catkin_ws/src
+git clone --recursive https://github.com/jepierre/darknet_py_ros.git
 cd ../
 ```
 
