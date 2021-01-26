@@ -11,6 +11,13 @@ git clone --recursive https://github.com/jepierre/darknet_py_ros.git
 
 git checkout dev
 bash build_darknet.sh
+```
+
+Build message files
+```
+cd ~/catkin_ws
+
+catkin_make -DCATKIN_WHITELIST_PACKAGES=""
 
 roslaunch darknet_py_ros  darknet_py_ros_.launch
 ```
