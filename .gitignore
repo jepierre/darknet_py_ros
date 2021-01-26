@@ -49,3 +49,9 @@ qtcreator-*
 
 # Catkin custom files
 CATKIN_IGNORE
+
+
+# Python files
+**__pycache__
+__pycached__/*
+**.pyc
