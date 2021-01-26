@@ -10,6 +10,7 @@ cd ~/catkin_ws/src
 git clone --recursive https://github.com/jepierre/darknet_py_ros.git
 
 git checkout dev
+cd darknet_py_ros
 bash build_darknet.sh
 ```
 
