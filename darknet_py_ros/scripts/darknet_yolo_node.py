@@ -31,9 +31,11 @@ class Yolo:
       self.bridge = CvBridge()
       PATH = os.path.dirname(__file__)
       os.chdir(PATH)
-      cfg_file = os.path.join("../data/cfg", "yolo-drone.cfg")
+      # cfg_file = os.path.join("../data/cfg", "yolo-drone.cfg")
+      cfg_file = os.path.join("../data/cfg", "yolov4-tiny-drone-pre-train.cfg")
       data_file = os.path.join("../data", "drone.data")
-      weights = os.path.join("../data/weights", "yolo-drone_199000.weights")
+      # weights = os.path.join("../data/weights", "yolo-drone_199000.weights")
+      weights = os.path.join("../data/weights", "yolov4-tiny-drone-pre-train_best.weights")
 
       cfg_file = rospy.get_param('cfg_file', cfg_file)
       data_file = rospy.get_param('data_file', data_file)
@@ -87,12 +89,12 @@ class Yolo:
 
           frame_rgb = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
           # TODO: change width and height to equal network width and height
-          frame_resized = cv2.resize(frame_rgb, (320, 320),
+          frame_resized = cv2.resize(frame_rgb, (self.height, self.width),
                                       interpolation=cv2.INTER_LINEAR)
           
           frame_detection = copy.deepcopy(frame_resized)
 
-          img_for_detect = dn.make_image(320, 320, 3)
+          img_for_detect = dn.make_image(self.height, self.width, 3)
           dn.copy_image_from_bytes(img_for_detect, frame_resized.tobytes())
                     
           self.frame += 1
