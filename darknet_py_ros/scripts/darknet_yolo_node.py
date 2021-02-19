@@ -37,9 +37,19 @@ class Yolo:
       # weights = os.path.join("../data/weights", "yolo-drone_199000.weights")
       weights = os.path.join("../data/weights", "yolov4-tiny-drone-pre-train_best.weights")
 
+      # threshhold for detection
+      thresh = .5
+
       cfg_file = rospy.get_param('cfg_file', cfg_file)
       data_file = rospy.get_param('data_file', data_file)
       weights = rospy.get_param('weights', weights)
+      self.thresh = rospy.get_param('threshold', thresh)
+      self.enable_kcf = rospy.get_param('enable_kcf', False)
+
+      rospy.logdebug(f"using cfg: {cfg_file}")
+      rospy.logdebug(f"using weights: {weights}")
+      rospy.logdebug(f"using threshold: {self.thresh}")
+      rospy.logdebug(f"enable_kcf: {self.enable_kcf}")
 
       self.network, self.class_names, self.class_colors = dn.load_network(
         cfg_file,
@@ -48,8 +58,6 @@ class Yolo:
         batch_size=1
       )
 
-      # threshhold for detection
-      self.thresh = .25
 
       self.width = dn.network_width(self.network)
       self.height = dn.network_height(self.network)
@@ -102,7 +110,7 @@ class Yolo:
             # run inference
             prev_time = time.time()
             detections = dn.detect_image(self.network, self.class_names, img_for_detect, thresh=self.thresh)
-            rospy.loginfo(f"nUmber of detections: {len(detections)}")
+            rospy.loginfo(f"number of detections: {len(detections)}")
 
             fps = int(1/(time.time() - prev_time))
             print("FPS: {}".format(fps))
@@ -114,7 +122,9 @@ class Yolo:
               del self.tracker
               self.tracker = cv2.TrackerKCF_create()
               self.tracker.init(frame_detection, bbox)
-              self.tracker_is_init = True
+              if self.enable_kcf:
+                self.tracker_is_init = True
+
             else:
               self.tracker_is_init = False
 
